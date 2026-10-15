@@ -1,0 +1,6 @@
+# Replace these documentation-only addresses with your lab switch addresses.
+switch1_host     = "192.0.2.10"
+switch2_host     = "192.0.2.11"
+switch_username  = "admin"
+
+# Add switch_password only to your local, untracked terraform.tfvars file.

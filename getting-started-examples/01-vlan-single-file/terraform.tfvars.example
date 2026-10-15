@@ -1,0 +1,4 @@
+# Replace with the management IP or hostname for your lab switch.
+switch_ip       = "192.0.2.10"
+switch_username = "admin"
+switch_password = "REPLACE_WITH_YOUR_SWITCH_PASSWORD"
