@@ -1,0 +1,8 @@
+# CHANGE this to the management IP or hostname of your switch.
+switch_ip = "192.0.2.10"
+
+# CHANGE this if your NETCONF username is not admin.
+switch_username = "admin"
+
+# CHANGE this to the switch password. This is only a placeholder.
+switch_password = "REPLACE_WITH_YOUR_SWITCH_PASSWORD"
