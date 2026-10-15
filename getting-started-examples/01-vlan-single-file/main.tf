@@ -3,7 +3,7 @@ terraform {
 
   required_providers {
     iosxe = {
-      source  = "CiscoDevNet/iosxe"
+      source = "CiscoDevNet/iosxe"
       # NETCONF became the default protocol in 0.15.0.
       version = "~> 0.15.0"
     }

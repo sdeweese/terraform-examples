@@ -6,21 +6,21 @@ resource "iosxe_access_list_extended" "mgmt_acl_sw1" {
 
   entries = [
     {
-      sequence              = 10
-      remark                = "Permit NETCONF management traffic"
-      ace_rule_action       = "permit"
-      ace_rule_protocol     = "tcp"
-      source_any            = true
-      destination_any       = true
+      sequence               = 10
+      remark                 = "Permit NETCONF management traffic"
+      ace_rule_action        = "permit"
+      ace_rule_protocol      = "tcp"
+      source_any             = true
+      destination_any        = true
       destination_port_equal = "830"
     },
     {
-      sequence              = 20
-      remark                = "Permit SSH management traffic"
-      ace_rule_action       = "permit"
-      ace_rule_protocol     = "tcp"
-      source_any            = true
-      destination_any       = true
+      sequence               = 20
+      remark                 = "Permit SSH management traffic"
+      ace_rule_action        = "permit"
+      ace_rule_protocol      = "tcp"
+      source_any             = true
+      destination_any        = true
       destination_port_equal = "22"
     },
     {
@@ -40,21 +40,21 @@ resource "iosxe_access_list_extended" "mgmt_acl_sw2" {
 
   entries = [
     {
-      sequence              = 10
-      remark                = "Permit NETCONF management traffic"
-      ace_rule_action       = "permit"
-      ace_rule_protocol     = "tcp"
-      source_any            = true
-      destination_any       = true
+      sequence               = 10
+      remark                 = "Permit NETCONF management traffic"
+      ace_rule_action        = "permit"
+      ace_rule_protocol      = "tcp"
+      source_any             = true
+      destination_any        = true
       destination_port_equal = "830"
     },
     {
-      sequence              = 20
-      remark                = "Permit SSH management traffic"
-      ace_rule_action       = "permit"
-      ace_rule_protocol     = "tcp"
-      source_any            = true
-      destination_any       = true
+      sequence               = 20
+      remark                 = "Permit SSH management traffic"
+      ace_rule_action        = "permit"
+      ace_rule_protocol      = "tcp"
+      source_any             = true
+      destination_any        = true
       destination_port_equal = "22"
     },
     {
