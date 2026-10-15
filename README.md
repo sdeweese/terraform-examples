@@ -49,7 +49,7 @@ Review the destroy plan before confirming. This removes resources tracked in tha
 
 ## Credentials and state
 
-The tracked `terraform.tfvars.example` files contain documentation-only addresses and password placeholders. Copy one to `terraform.tfvars` and enter real values locally. `.gitignore` excludes real `.tfvars` files, Terraform state, plans, and the `.terraform` working directory. Never commit credentials or state: Terraform state can contain sensitive values, and `sensitive = true` only hides values from some CLI output.
+The tracked `terraform.tfvars.example` files mark the values you need to change: switch IP or hostname, NETCONF username, and device password. Copy the template in the example folder you are using to `terraform.tfvars`, edit those fields with your lab values, and run Terraform from that same folder. `.gitignore` excludes real `.tfvars` files, Terraform state, plans, and the `.terraform` working directory. Never commit credentials or state: Terraform state can contain sensitive values, and `sensitive = true` only hides values from some CLI output.
 
 ## What the Terraform files do
 

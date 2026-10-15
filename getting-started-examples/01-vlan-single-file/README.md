@@ -13,7 +13,7 @@ It does not configure an SVI, change a default gateway, or assign a switchport t
 
 ## Configure local values
 
-Copy [`terraform.tfvars.example`](terraform.tfvars.example) to `terraform.tfvars`, then replace the sample switch address and password with your values:
+Copy [`terraform.tfvars.example`](terraform.tfvars.example) to `terraform.tfvars`. In the copied file, change `switch_ip` to your switch management IP or hostname, `switch_username` to your NETCONF username, and `switch_password` to your device password. The values in the example are placeholders:
 
 ```hcl
 switch_ip       = "192.0.2.10"
@@ -21,7 +21,7 @@ switch_username = "admin"
 switch_password = "your-local-device-password"
 ```
 
-Terraform automatically loads `terraform.tfvars` from the directory where you run the command, so `terraform plan` won't prompt for these values. The local `terraform.tfvars` file is ignored by Git. Keep real credentials out of the tracked `.tfvars.example` template.
+Terraform automatically loads `terraform.tfvars` from this directory, so `terraform plan` will not prompt for these inputs. The local file is ignored by Git; never put a real password in `main.tf` or commit the local `.tfvars` file.
 
 ```sh
 cp terraform.tfvars.example terraform.tfvars

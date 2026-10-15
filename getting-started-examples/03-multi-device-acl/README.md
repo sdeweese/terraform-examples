@@ -14,11 +14,11 @@ The configuration uses two aliased provider instances in `provider.tf`, input de
 
 ## Configure and run
 
-From this directory:
+From this directory, copy the template and edit the marked fields in `terraform.tfvars`: set `switch5_host` and `switch55_host` to your two switch management IPs or hostnames, `switch_username` to the NETCONF username, and `switch_password` to the device password. The example IPs are documentation-only placeholders.
 
 ```sh
 cp terraform.tfvars.example terraform.tfvars
-# Edit terraform.tfvars with both lab addresses and your local password.
+# Edit the marked IP, username, and password values in terraform.tfvars.
 terraform init
 terraform fmt -check
 terraform validate
