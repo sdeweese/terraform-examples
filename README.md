@@ -50,3 +50,14 @@ Review the destroy plan before confirming. This removes resources tracked in tha
 ## Credentials and state
 
 The tracked `terraform.tfvars.example` files contain documentation-only addresses and password placeholders. Copy one to `terraform.tfvars` and enter real values locally. `.gitignore` excludes real `.tfvars` files, Terraform state, plans, and the `.terraform` working directory. Never commit credentials or state: Terraform state can contain sensitive values, and `sensitive = true` only hides values from some CLI output.
+
+## What the Terraform files do
+
+- **`.tf` configuration files** contain Terraform settings, provider configurations, input declarations, and resources. Names such as `main.tf`, `provider.tf`, `variables.tf`, and `acl.tf` are conventions for organizing the files. Terraform combines all `.tf` files in the current example directory into one configuration; it does not load `.tf` files from other directories.
+- **`variables.tf`** is the conventional place to declare the inputs the configuration accepts, using `variable` blocks. A declaration defines the input's name, type, description, default (if any), and whether Terraform should mark it sensitive. The filename is optional: the single-file VLAN example declares its variables in `main.tf` instead.
+- **`terraform.tfvars`** assigns actual values to declared inputs, for example your switch addresses and password. Terraform automatically loads this exact filename from the directory where you run Terraform, so you do not need to type those values at each prompt. Create it by copying `terraform.tfvars.example` and editing the copy. The `.example` template is documentation and is not auto-loaded.
+- **`terraform.tfvars.example`** is a safe template to commit. It uses documentation-only IP addresses and a password placeholder. Keep your real `terraform.tfvars` private; the repository `.gitignore` excludes it.
+- **`.terraform.lock.hcl`** records the selected provider versions and checksums so future `terraform init` runs can use consistent provider packages. If generated for an example, commit this lock file.
+- **`terraform.tfstate`** records Terraform's tracked resource state and can contain sensitive information. Keep it private and do not commit it. The `.terraform/` directory contains downloaded provider working files and should also stay out of Git.
+
+If a required variable has no value in `terraform.tfvars`, another automatically loaded variable file, an environment variable, a CLI option, or a default, Terraform prompts for it (or reports it missing in non-interactive runs). `sensitive = true` hides a variable in some CLI output, but does not by itself keep secrets out of Terraform state.
