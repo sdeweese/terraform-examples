@@ -19,3 +19,9 @@ variable "switch_password" {
   type        = string
   sensitive   = true
 }
+
+variable "acl_name" {
+  description = "Unique extended ACL name for the lab exercise."
+  type        = string
+  default     = "TF_LAB_MGMT_INBOUND"
+}
