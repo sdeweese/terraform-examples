@@ -1,0 +1,9 @@
+# CHANGE these to the management IP addresses or hostnames of your switches.
+switch1_host = "192.0.2.10"
+switch2_host = "192.0.2.11"
+
+# Replace this with the NETCONF username provided for your sandbox reservation.
+switch_username = "REPLACE_WITH_YOUR_SANDBOX_USERNAME"
+
+# Replace this placeholder with the password provided for your sandbox reservation.
+switch_password = "REPLACE_WITH_YOUR_SWITCH_PASSWORD"

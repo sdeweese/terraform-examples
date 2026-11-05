@@ -1,0 +1,8 @@
+# CHANGE this if your reservation provides a different management IP or hostname.
+switch_ip = "10.10.20.181"
+
+# Replace this with the NETCONF username provided for your sandbox reservation.
+switch_username = "REPLACE_WITH_YOUR_SANDBOX_USERNAME"
+
+# Replace this placeholder with the password provided for your sandbox reservation.
+switch_password = "REPLACE_WITH_YOUR_SWITCH_PASSWORD"

@@ -1,0 +1,4 @@
+# Update this address if your sandbox reservation provides a different one.
+switch_ip       = "10.10.20.181"
+switch_username = "REPLACE_WITH_RESERVATION_USERNAME"
+switch_password = "REPLACE_WITH_RESERVATION_PASSWORD"
