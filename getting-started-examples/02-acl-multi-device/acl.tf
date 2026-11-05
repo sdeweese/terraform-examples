@@ -2,7 +2,7 @@
 # before using this ACL outside a lab.
 resource "iosxe_access_list_extended" "mgmt_acl_sw1" {
   provider = iosxe.switch1
-  name     = "ACL_MGMT_INBOUND"
+  name     = var.acl_name
 
   entries = [
     {
@@ -36,7 +36,7 @@ resource "iosxe_access_list_extended" "mgmt_acl_sw1" {
 
 resource "iosxe_access_list_extended" "mgmt_acl_sw2" {
   provider = iosxe.switch2
-  name     = "ACL_MGMT_INBOUND"
+  name     = var.acl_name
 
   entries = [
     {

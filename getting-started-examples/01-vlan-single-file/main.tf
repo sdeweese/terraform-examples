@@ -4,8 +4,8 @@ terraform {
   required_providers {
     iosxe = {
       source = "CiscoDevNet/iosxe"
-      # NETCONF became the default protocol in 0.15.0.
-      version = "~> 0.15.0"
+      # v1.x uses NETCONF only.
+      version = "~> 1.1.1"
     }
   }
 }
@@ -19,6 +19,16 @@ provider "iosxe" {
 
 variable "switch_ip" {
   description = "Target Cisco IOS XE switch IP address or hostname."
+  type        = string
+}
+
+variable "vlan_id" {
+  description = "An unused Layer 2 VLAN ID on the target switch."
+  type        = number
+}
+
+variable "vlan_name" {
+  description = "Name for the new Layer 2 VLAN."
   type        = string
 }
 
@@ -37,7 +47,22 @@ variable "switch_password" {
 # Create a Layer 2 VLAN only. This example does not configure an SVI,
 # default gateway, or switchport membership.
 resource "iosxe_vlan" "vlan_500" {
-  vlan_id  = 500
-  name     = "VLAN_500"
+  vlan_id  = var.vlan_id
+  name     = var.vlan_name
   shutdown = false
+}
+
+# Read the VLAN before and after the resource is applied. If the selected VLAN
+# does not exist yet, the provider returns its ID with unset fields.
+data "iosxe_vlan" "observed" {
+  vlan_id = var.vlan_id
+}
+
+output "vlan_observed" {
+  description = "VLAN values returned by the IOS XE data source."
+  value = {
+    vlan_id  = data.iosxe_vlan.observed.vlan_id
+    name     = data.iosxe_vlan.observed.name
+    shutdown = data.iosxe_vlan.observed.shutdown
+  }
 }

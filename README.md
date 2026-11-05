@@ -6,7 +6,7 @@ Three independent getting-started examples for managing Cisco IOS XE with Terraf
 
 - Terraform CLI `>= 1.3.0`
 - Cisco IOS XE devices with NETCONF enabled (`netconf-yang`) and reachable over SSH on port 830
-- CiscoDevNet/iosxe provider `~> 0.15.0`; this version line uses NETCONF by default
+- CiscoDevNet/iosxe provider `~> 1.1.1`; provider v1.x uses NETCONF only
 - A local `terraform.tfvars` file with your device connection values
 
 ## Examples
@@ -15,7 +15,7 @@ Three independent getting-started examples for managing Cisco IOS XE with Terraf
 
 Folder: [`getting-started-examples/01-vlan-single-file`](getting-started-examples/01-vlan-single-file/)
 
-Creates Layer 2 VLAN 500 named `VLAN_500`. It does not create an SVI, change a default gateway, or assign a switchport to the VLAN. The provider, variable declarations, and resource are together in `main.tf`.
+Creates a Layer 2 VLAN using the ID and name in `terraform.tfvars`. Choose an ID that is not already configured on the switch. It does not create an SVI, change a default gateway, or assign a switchport to the VLAN. Provider configuration, variable declarations, resource, data source, and output are together in `main.tf`.
 
 ### 2. Same ACL on two switches, standard split files
 
@@ -23,11 +23,15 @@ Folder: [`getting-started-examples/02-acl-multi-device`](getting-started-example
 
 Uses `provider.tf`, `variables.tf`, and `acl.tf` to create the same extended ACL on two switches. It creates the ACL objects but does not attach them to an interface. The sample rules permit TCP/830 and TCP/22 from any source, then deny other IP traffic. Restrict the source addresses before using this outside an isolated lab.
 
+Set `acl_name` in your local `terraform.tfvars` to a name that is not already configured on either switch.
+
 ### 3. Same ACL on the two lab switches ending in `.5` and `.55`
 
 Folder: [`getting-started-examples/03-multi-device-acl`](getting-started-examples/03-multi-device-acl/)
 
 Uses aliased provider configurations and one shared ACL definition to apply the same ACL to both switches. The checked-in variable template uses documentation-only sample IP addresses; enter your actual lab addresses in your local `terraform.tfvars`. Like example 2, the ACL is not attached to an interface, and its sample rules allow management traffic from any source.
+
+Set `acl_name` in your local `terraform.tfvars` to a name that is not already configured on either switch.
 
 ## Terraform file types
 
@@ -54,6 +58,7 @@ Open the copied `terraform.tfvars` and change the marked values:
 - `switch_ip`: your switch management IP address or hostname
 - `switch_username`: your NETCONF username (the template defaults to `admin`)
 - `switch_password`: your device password
+- `vlan_id` and `vlan_name`: choose an unused ID after checking `show vlan brief`
 
 Then run:
 
@@ -61,33 +66,38 @@ Then run:
 terraform init
 terraform fmt -check
 terraform validate
+terraform plan -out=reviewed.tfplan
+terraform show reviewed.tfplan
+terraform apply --auto-approve reviewed.tfplan
 terraform plan
 ```
 
-For either ACL example, change into its folder and repeat the same commands. In examples 2 and 3, update both switch address fields, plus the username and password. The `.tfvars.example` file in each folder lists the exact input names.
+The saved plan reads the configured VLAN ID before creating it. Review it with `terraform show` before applying. Passing a saved plan is Terraform's approval, so it ignores `--auto-approve` in this mode. After apply, the second plan reads the same ID again and should show its current name and state through the data source. If the ID already exists, choose a different unused ID and update its name before applying. Keep saved plan files private; they can contain sensitive values.
+
+For either ACL example, change into its folder and repeat the same commands. In examples 2 and 3, update both switch address fields, the username and password, and `acl_name`. Check that the ACL name is unused on both devices. The `.tfvars.example` file in each folder lists the exact input names.
 
 Terraform reads `.tf` files only from the directory where you run it; it does not load `.tf` files from sibling or child folders. Run each example from its own folder so configurations and state do not get mixed.
 
-On a first plan with empty state, expect one VLAN resource to add for example 1, or two ACL resources for examples 2 and 3. Existing state may instead show no changes or updates. Review the full plan and verify the target devices and values before `terraform apply`.
+On a first plan with empty state, expect one VLAN resource to add for example 1, or two ACL resources for examples 2 and 3. Existing state may instead show no changes or updates. Review the full plan and verify the target devices and values before apply.
 
 ## Verify and clean up
 
-For the VLAN example, verify on the switch:
+For the VLAN example, verify on the switch using your selected VLAN ID:
 
 ```text
-show vlan id 500
+show vlan id <VLAN_ID>
 ```
 
-For either ACL example, verify on each switch:
+For either ACL example, verify on each switch using the ACL name you set in `terraform.tfvars`:
 
 ```text
-show ip access-lists ACL_MGMT_INBOUND
+show ip access-lists <ACL_NAME>
 ```
 
 When finished, run destroy from the same example directory, using the same local state:
 
 ```sh
-terraform destroy
+terraform destroy --auto-approve
 ```
 
-Review the destroy plan before confirming. This removes only resources recorded in that example's state. Do not destroy a VLAN or ACL that other device configuration depends on.
+Before running destroy, confirm you are in the correct example folder and that its state contains only the lab resources. This removes resources recorded in that example's state. Do not destroy a VLAN or ACL that other device configuration depends on.

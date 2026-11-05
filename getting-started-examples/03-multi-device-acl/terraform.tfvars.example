@@ -6,5 +6,8 @@ switch55_host = "192.0.2.11"
 # CHANGE this if the switches use another NETCONF username.
 switch_username = "admin"
 
+# Choose a name that is not already configured on either switch.
+acl_name = "TF_LAB_MGMT_INBOUND"
+
 # CHANGE this to the shared switch password. This is only a placeholder.
 switch_password = "REPLACE_WITH_YOUR_SWITCH_PASSWORD"

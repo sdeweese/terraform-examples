@@ -33,12 +33,12 @@ locals {
 
 resource "iosxe_access_list_extended" "management_switch5" {
   provider = iosxe.switch5
-  name     = "ACL_MGMT_INBOUND"
+  name     = var.acl_name
   entries  = local.management_acl_entries
 }
 
 resource "iosxe_access_list_extended" "management_switch55" {
   provider = iosxe.switch55
-  name     = "ACL_MGMT_INBOUND"
+  name     = var.acl_name
   entries  = local.management_acl_entries
 }

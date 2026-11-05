@@ -4,7 +4,8 @@ terraform {
   required_providers {
     iosxe = {
       source  = "CiscoDevNet/iosxe"
-      version = "~> 0.15.0"
+      # v1.x uses NETCONF only.
+      version = "~> 1.1.1"
     }
   }
 }

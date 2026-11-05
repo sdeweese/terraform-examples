@@ -6,3 +6,8 @@ switch_username = "admin"
 
 # CHANGE this to the switch password. This is only a placeholder.
 switch_password = "REPLACE_WITH_YOUR_SWITCH_PASSWORD"
+
+# CHANGE these after checking `show vlan brief`; choose a VLAN ID that is not
+# already configured on the switch, and give it a name you recognize.
+vlan_id   = 500
+vlan_name = "TF_LAB_VLAN"
